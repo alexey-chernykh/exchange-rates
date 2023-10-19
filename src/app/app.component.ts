@@ -13,13 +13,22 @@ export class AppComponent {
   currFrom = "";
   currTo = "";
   currAmount = "";
-  currResult:any;
-  
+  curr1:any;
+  curr2:any;
+  usdToUah: any;
+  eurToUah: any;
+
   constructor(private service: HttpService, private http: HttpClient){
   }
   
   ngOnInit(): void{
     this.currs = this.service.getAllCodes();
+    this.eurToUah = this.service.sendGetRequest("EUR", "UAH", "1").subscribe((result) => {
+      this.eurToUah = result;
+    });
+    this.usdToUah = this.service.sendGetRequest("USD", "UAH", "1").subscribe((result) => {
+      this.usdToUah = result;
+    });
   }
 
   onDropdown1Click = (event:any) => {
@@ -28,13 +37,27 @@ export class AppComponent {
   onDropdown2Click = (event:any) => {
     this.currTo = event.target.innerText;
   }
-  onCurrInput = (event:any) => {
-    this.currAmount = event.target.value;
+  onCurr1Input = (event:any) => {
+    this.curr1 = event.target.value;
+    this.currAmount = this.curr1;
+    this.ExchangeRate(1);
+  }
+  onCurr2Input = (event:any) => {
+    this.curr2 = event.target.value;
+    this.currAmount = this.curr2;
+    this.ExchangeRate(2);
   }
 
-  onBtnSubmit = () => {
-    this.currResult = this.service.sendGetRequest(this.currFrom, this.currTo, this.currAmount).subscribe((result) => {
-      this.currResult = result;
-    });
+  ExchangeRate = (state:number) => {
+    if(state == 1){
+      this.curr2 = this.service.sendGetRequest(this.currFrom, this.currTo, this.currAmount).subscribe((result) => {
+        this.curr2 = result;
+      });
+    } else {
+      this.curr1 = this.service.sendGetRequest(this.currFrom, this.currTo, this.currAmount).subscribe((result) => {
+        this.curr1 = result;
+      });
+    }
+    
   }
 }
