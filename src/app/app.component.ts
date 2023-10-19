@@ -54,7 +54,7 @@ export class AppComponent {
         this.curr2 = result;
       });
     } else {
-      this.curr1 = this.service.sendGetRequest(this.currFrom, this.currTo, this.currAmount).subscribe((result) => {
+      this.curr1 = this.service.sendGetRequest(this.currTo, this.currFrom, this.currAmount).subscribe((result) => {
         this.curr1 = result;
       });
     }
