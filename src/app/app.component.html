@@ -1,0 +1,30 @@
+<div class="block">
+    <h1>{{title}}</h1>
+</div>
+<div class="block">
+  <div class="mb-3">
+    <label for="inputCurrency" class="form-label">Input Currency</label>
+    <div class="input-group mb-3">
+      <input type="number" id="inputCurrency" class="form-control" aria-label="Text input with dropdown button" (input)="onCurrInput($event)">
+      <button class="btn btn-outline-secondary dropdown-toggle" id="dropdownMenuButton1" type="button" data-bs-toggle="dropdown" aria-expanded="false">{{currFrom == "" ? 'From' : currFrom}}</button>
+      <ul class="dropdown-menu dropdown-menu-end my-dropdown" aria-labelledby="dropdownMenuButton1">
+        <li *ngFor="let curr of currs"><a class="dropdown-item" href="#" (click)="onDropdown1Click($event)">{{curr}}</a></li>
+      </ul>
+    </div>
+    <label for="outputCurrency" class="form-label">Output Currency</label>
+    <div class="input-group mb-3">
+      <fieldset disabled>
+        <input type="number" id="outputCurrency" class="form-control" aria-label="Text input with dropdown button" [value]="currResult === undefined  ? '' : currResult">
+      </fieldset>
+      <button class="btn btn-outline-secondary dropdown-toggle" id="dropdownMenuButton2" type="button" data-bs-toggle="dropdown" aria-expanded="false">{{currTo == "" ? 'To' : currTo}}</button>
+      <ul class="dropdown-menu dropdown-menu-end my-dropdown" aria-labelledby="dropdownMenuButton2">
+        <li *ngFor="let curr of currs"><a class="dropdown-item" href="#" (click)="onDropdown2Click($event)">{{curr}}</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="block">
+  <button type="button" class="btn btn-success" (click)="onBtnSubmit()">Submit</button>
+</div>
+
+
