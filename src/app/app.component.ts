@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HttpService } from './http.service';
+import { HttpService } from './httpService/http.service';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -7,57 +7,56 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
+//TOLEARN -TODO: custom form elements using ControlValueAccessor, control over changing values using reactive forms.  
+
 export class AppComponent {
-  title = 'Currency Converter';
-  currs: string[] = [];
-  currFrom = "";
-  currTo = "";
-  currAmount = "";
-  curr1:any;
-  curr2:any;
-  usdToUah: any;
-  eurToUah: any;
+  title: string = 'Currency Converter';
+  currencies: string[] = [];
+  currencyFrom: string = "";
+  currencyTo: string = "";
+  inputValue1:number = 0;
+  inputValue2:number = 0;
+  usdToUah: number = 0;
+  eurToUah: number = 0;
 
   constructor(private service: HttpService, private http: HttpClient){
   }
   
   ngOnInit(): void{
-    this.currs = this.service.getAllCodes();
-    this.eurToUah = this.service.sendGetRequest("EUR", "UAH", "1").subscribe((result) => {
+    this.currencies = this.service.getAllCodes();
+    this.fillHeaderRates();
+  }
+  getRequest = (from: string, to: string, amount: number) => {
+    return this.service.sendGetRequest(from, to, amount);
+  }
+  fillHeaderRates = () => {
+    this.getRequest("EUR", "UAH", 1).subscribe((result) => {
       this.eurToUah = result;
     });
-    this.usdToUah = this.service.sendGetRequest("USD", "UAH", "1").subscribe((result) => {
+    this.getRequest("USD", "UAH", 1).subscribe((result) => {
       this.usdToUah = result;
     });
   }
 
-  onDropdown1Click = (event:any) => {
-    this.currFrom = event.target.innerText;
+  onDropdown1Click = (event:MouseEvent) => {
+    this.currencyFrom = (event.target as HTMLElement).innerText;
   }
-  onDropdown2Click = (event:any) => {
-    this.currTo = event.target.innerText;
+  onDropdown2Click = (event:MouseEvent) => {
+    this.currencyTo = (event.target as HTMLElement).innerText;
   }
-  onCurr1Input = (event:any) => {
-    this.curr1 = event.target.value;
-    this.currAmount = this.curr1;
+  oninputValue1Input = (event:Event) => {
+    this.inputValue1 = +(event.target as HTMLInputElement).value;
     this.ExchangeRate(1);
   }
-  onCurr2Input = (event:any) => {
-    this.curr2 = event.target.value;
-    this.currAmount = this.curr2;
+  oninputValue2Input = (event:Event) => {
+    this.inputValue2 = +(event.target as HTMLInputElement).value;
     this.ExchangeRate(2);
   }
 
   ExchangeRate = (state:number) => {
-    if(state == 1){
-      this.curr2 = this.service.sendGetRequest(this.currFrom, this.currTo, this.currAmount).subscribe((result) => {
-        this.curr2 = result;
+      this.getRequest(this.currencyFrom, this.currencyTo, this.inputValue1).subscribe((result) => {
+        state == 1 ? (this.inputValue2 = result) : (this.inputValue1 = result);
       });
-    } else {
-      this.curr1 = this.service.sendGetRequest(this.currTo, this.currFrom, this.currAmount).subscribe((result) => {
-        this.curr1 = result;
-      });
-    }
-    
   }
 }

@@ -16,18 +16,18 @@
   <div class="mb-3">
     <label for="inputCurrency" class="form-label">Input Currency</label>
     <div class="input-group mb-3">
-      <input type="number" id="inputCurrency" class="form-control" aria-label="Text input with dropdown button" (input)="onCurr1Input($event)" [value]="curr1">
-      <button class="btn btn-outline-secondary dropdown-toggle" id="dropdownMenuButton1" type="button" data-bs-toggle="dropdown" aria-expanded="false">{{currFrom == "" ? 'From' : currFrom}}</button>
+      <input type="number" id="inputCurrency" class="form-control" aria-label="Text input with dropdown button" (input)="oninputValue1Input($event)" [value]="inputValue1">
+      <button class="btn btn-outline-secondary dropdown-toggle" id="dropdownMenuButton1" type="button" data-bs-toggle="dropdown" aria-expanded="false">{{currencyFrom == "" ? 'From' : currencyFrom}}</button>
       <ul class="dropdown-menu dropdown-menu-end my-dropdown" aria-labelledby="dropdownMenuButton1">
-        <li *ngFor="let curr of currs"><a class="dropdown-item" href="#" (click)="onDropdown1Click($event)">{{curr}}</a></li>
+        <li *ngFor="let curr of currencies"><a class="dropdown-item" href="#" (click)="onDropdown1Click($event)">{{curr}}</a></li>
       </ul>
     </div>
     <label for="outputCurrency" class="form-label">Output Currency</label>
     <div class="input-group mb-3">
-      <input type="number" id="outputCurrency" class="form-control" aria-label="Text input with dropdown button" (input)="onCurr2Input($event)" [value]="curr2">
-      <button class="btn btn-outline-secondary dropdown-toggle" id="dropdownMenuButton2" type="button" data-bs-toggle="dropdown" aria-expanded="false">{{currTo == "" ? 'To' : currTo}}</button>
+      <input type="number" id="outputCurrency" class="form-control" aria-label="Text input with dropdown button" (input)="oninputValue2Input($event)" [value]="inputValue2">
+      <button class="btn btn-outline-secondary dropdown-toggle" id="dropdownMenuButton2" type="button" data-bs-toggle="dropdown" aria-expanded="false">{{currencyTo == "" ? 'To' : currencyTo}}</button>
       <ul class="dropdown-menu dropdown-menu-end my-dropdown" aria-labelledby="dropdownMenuButton2">
-        <li *ngFor="let curr of currs"><a class="dropdown-item" href="#" (click)="onDropdown2Click($event)">{{curr}}</a></li>
+        <li *ngFor="let curr of currencies"><a class="dropdown-item" href="#" (click)="onDropdown2Click($event)">{{curr}}</a></li>
       </ul>
     </div>
   </div>
